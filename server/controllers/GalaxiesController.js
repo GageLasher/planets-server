@@ -1,5 +1,6 @@
 import { Auth0Provider } from "@bcwdev/auth0provider";
 import { galaxiesService } from "../services/GalaxiesService";
+import { planetsService } from "../services/PlanetsService";
 import { starsService } from "../services/StarsService";
 import BaseController from "../utils/BaseController";
 
@@ -9,6 +10,7 @@ export class GalaxiesController extends BaseController{
         this.router
         .get('', this.getAll)
         .get('/:id', this.getById)
+        .get('/:id/planets', this.getGalaxyPlanets)
         .get('/:id/stars', this.getGalaxyStars)
         .use(Auth0Provider.getAuthorizedUserInfo)
         .post('', this.create)
@@ -33,6 +35,14 @@ export class GalaxiesController extends BaseController{
         try {
             const stars = await starsService.getAll({galaxyId: req.params.id})
             return res.send(stars)
+        } catch (error) {
+            next(error)
+        }
+    }
+    async getGalaxyPlanets(req, res, next){
+        try {
+            const planets = await planetsService.getAll({galaxyId: req.params.id})
+            return res.send(planets)
         } catch (error) {
             next(error)
         }

@@ -6,3 +6,10 @@ export const GalaxySchema = new Schema({
 },
 {timestamps: true, toJSON:{virtuals: true}}
 )
+
+GalaxySchema.virtual('creator',{
+    localField: "creatorId",
+    foreignField: '_id',
+    justOne: true,
+    ref: 'Profile'
+})

@@ -3,7 +3,7 @@ import { Forbidden } from "../utils/Errors"
 
 class GalaxiesService{
     async getAll(query = {}){
-        const galaxies = await dbContext.Galaxies.find(query)
+        const galaxies = await dbContext.Galaxies.find(query).populate('creator', 'name picture')
         return galaxies
     }
     async getById(id){

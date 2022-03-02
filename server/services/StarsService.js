@@ -3,7 +3,9 @@ import { dbContext } from "../db/DbContext"
 class StarsService {
 
         async getAll(query = {}){
-            const stars = await dbContext.Stars.find(query)
+            const stars = await dbContext.Stars.find(query).populate(
+                'galaxy', 'name'
+            )
             return stars
         }
         async create(body){
